@@ -1,14 +1,13 @@
 package com.ll.exam.Util;
 
-import com.ll.exam.article.controller.ArticleController;
-import com.ll.exam.article.repository.ArticleRepository;
-import com.ll.exam.article.service.ArticleService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.management.Descriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-public class Ut {
+public class Util {
     public static class reflection{
         public static <T> T getFieldValue(Object o, String fieldName, T defaultValue) {
             Field field = null;
@@ -43,6 +42,38 @@ public class Ut {
             } catch (InvocationTargetException e) {
                 return defaultValue;
             } catch (NoSuchMethodException e) {
+                return defaultValue;
+            }
+        }
+    }
+
+    public static class json {
+        private static final ObjectMapper om;
+
+        static {
+            om = new ObjectMapper();
+        }
+
+        public static String toStr(Object obj, String defaultValue) {
+            try {
+                return om.writeValueAsString(obj);
+            } catch (JsonProcessingException e) {
+                return defaultValue;
+            }
+        }
+
+        public static <T> T toObj(String jsonStr, Class<T> cls, T defaultValue) {
+            try {
+                return om.readValue(jsonStr, cls);
+            } catch (JsonProcessingException e) {
+                return defaultValue;
+            }
+        }
+
+        public static <T> T toObj(String jsonStr, TypeReference<T> typeReference, T defaultValue) {
+            try {
+                return om.readValue(jsonStr, typeReference);
+            } catch (JsonProcessingException e) {
                 return defaultValue;
             }
         }

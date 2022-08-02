@@ -4,11 +4,8 @@ import com.ll.exam.annotation.Autowired;
 import com.ll.exam.annotation.Controller;
 import com.ll.exam.annotation.Repository;
 import com.ll.exam.annotation.Service;
-import com.ll.exam.article.controller.ArticleController;
-import com.ll.exam.home.controller.HomeController;
 import org.reflections.Reflections;
 
-import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class Container {
@@ -33,7 +30,7 @@ public class Container {
     private static void scanRepository() {
         Reflections ref = new Reflections("com.ll.exam");
         for (Class<?> c : ref.getTypesAnnotatedWith(Repository.class)) {
-            objectMap.put(c, Ut.cls.newObj(c, null));
+            objectMap.put(c, Util.cls.newObj(c, null));
         }
     }
 
@@ -68,14 +65,14 @@ public class Container {
     private static void scanService() {
         Reflections ref = new Reflections("com.ll.exam");
         for (Class<?> c : ref.getTypesAnnotatedWith(Service.class)) {
-            objectMap.put(c, Ut.cls.newObj(c, null));
+            objectMap.put(c, Util.cls.newObj(c, null));
         }
     }
 
     private static void scanController() {
         Reflections ref = new Reflections("com.ll.exam");
         for (Class<?> c : ref.getTypesAnnotatedWith(Controller.class)) {
-            objectMap.put(c, Ut.cls.newObj(c, null));
+            objectMap.put(c, Util.cls.newObj(c, null));
         }
     }
 

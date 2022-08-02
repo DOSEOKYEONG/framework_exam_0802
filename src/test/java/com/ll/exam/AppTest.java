@@ -2,7 +2,7 @@ package com.ll.exam;
 
 
 import com.ll.exam.Util.Container;
-import com.ll.exam.Util.Ut;
+import com.ll.exam.Util.Util;
 import com.ll.exam.article.controller.ArticleController;
 import com.ll.exam.article.repository.ArticleRepository;
 import com.ll.exam.article.service.ArticleService;
@@ -81,7 +81,7 @@ public class AppTest {
     public void articleController를_생성할때_articleService도_같이_생성() {
         ArticleController articleController = Container.getObj(ArticleController.class);
 
-        ArticleService articleService = Ut.reflection.getFieldValue(articleController, "articleService", null);
+        ArticleService articleService = Util.reflection.getFieldValue(articleController, "articleService", null);
 
         assertThat(articleService).isNotNull();
     }
@@ -90,7 +90,7 @@ public class AppTest {
     public void articleService를_생성할때_articleRepository도_같이_생성() {
         ArticleService articleService = Container.getObj(ArticleService.class);
 
-        ArticleRepository articleRepository = Ut.reflection.getFieldValue(articleService, "articleRepository", null);
+        ArticleRepository articleRepository = Util.reflection.getFieldValue(articleService, "articleRepository", null);
 
         assertThat(articleRepository).isNotNull();
     }
