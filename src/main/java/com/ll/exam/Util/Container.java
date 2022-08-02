@@ -18,16 +18,15 @@ public class Container {
     }
 
     private static void scanComponents() {
-        scanController();
-        scanService();
-        scanRepository();
-
+        scanRepositories();
+        scanServices();
+        scanControllers();
         // 조립 의존성 해결
         resolveDependenciesAllComponents();
 
     }
 
-    private static void scanRepository() {
+    private static void scanRepositories() {
         Reflections ref = new Reflections("com.ll.exam");
         for (Class<?> c : ref.getTypesAnnotatedWith(Repository.class)) {
             objectMap.put(c, Util.cls.newObj(c, null));
@@ -45,7 +44,7 @@ public class Container {
     private static void resolveDependencies(Object o) {
         Arrays.asList(o.getClass().getDeclaredFields())
                 .stream()
-                .filter(field -> field.isAnnotationPresent(Autowired.class))
+                .filter(f -> f.isAnnotationPresent(Autowired.class))
                 .map(field -> {
                     field.setAccessible(true);
                     return field;
@@ -57,19 +56,19 @@ public class Container {
                     try {
                         field.set(o, dependency);
                     } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
+
                     }
                 });
     }
 
-    private static void scanService() {
+    private static void scanServices() {
         Reflections ref = new Reflections("com.ll.exam");
         for (Class<?> c : ref.getTypesAnnotatedWith(Service.class)) {
             objectMap.put(c, Util.cls.newObj(c, null));
         }
     }
 
-    private static void scanController() {
+    private static void scanControllers() {
         Reflections ref = new Reflections("com.ll.exam");
         for (Class<?> c : ref.getTypesAnnotatedWith(Controller.class)) {
             objectMap.put(c, Util.cls.newObj(c, null));
@@ -91,24 +90,24 @@ public class Container {
         return AllControllerNames;
     }
 
-    private static void initObject(Object obj) {
-        Arrays.asList(obj.getClass().getDeclaredFields())
-                .stream()
-                .sequential()
-                .filter(f -> f.isAnnotationPresent(Autowired.class))
-                .map(field -> {
-                    field.setAccessible(true);
-                    return field;
-                })
-                .forEach(field -> {
-                    Class clazz = field.getType();
-
-                    try {
-                        field.set(obj, objectMap.get(clazz));
-                    } catch (IllegalAccessException e) {
-
-                    }
-                });
-    }
+//    private static void initObject(Object obj) {
+//        Arrays.asList(obj.getClass().getDeclaredFields())
+//                .stream()
+//                .sequential()
+//                .filter(f -> f.isAnnotationPresent(Autowired.class))
+//                .map(field -> {
+//                    field.setAccessible(true);
+//                    return field;
+//                })
+//                .forEach(field -> {
+//                    Class clazz = field.getType();
+//
+//                    try {
+//                        field.set(obj, objectMap.get(clazz));
+//                    } catch (IllegalAccessException e) {
+//
+//                    }
+//                });
+//    }
 
 }

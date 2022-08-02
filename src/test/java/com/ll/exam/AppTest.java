@@ -10,6 +10,7 @@ import com.ll.exam.home.controller.HomeController;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -93,5 +94,29 @@ public class AppTest {
         ArticleRepository articleRepository = Util.reflection.getFieldValue(articleService, "articleRepository", null);
 
         assertThat(articleRepository).isNotNull();
+    }
+
+    @Test
+    public void ControllerManager__라우트정보_개수() {
+        Map<String, RouteInfo> routeInfos = ControllerManager.getRouteInfoMap();
+
+        System.out.println(routeInfos.size());
+    }
+
+    @Test
+    public void Test시발() {
+        String path = "/usr/article/list/";
+        String result = "";
+        String[] strings = path.split("/");
+        int matchCount = 4;
+
+        for (int i = 0; i < matchCount; i++) {
+            result = result + strings[i];
+            if (i + 1 < matchCount) {
+                result += "/";
+            }
+        }
+
+        System.out.println(result);
     }
 }

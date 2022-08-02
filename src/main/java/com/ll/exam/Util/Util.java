@@ -78,4 +78,34 @@ public class Util {
             }
         }
     }
+
+    public static class Str {
+
+        public static String beforeForm(String path, String fromStr, int matchCount) {
+
+            String beforeForm = "";
+//            /usr/article/list/
+            String[] strings = path.split(fromStr);
+            for (int i = 0; i < matchCount; i++) {
+                beforeForm = beforeForm + strings[i];
+                if (i + 1 < matchCount) {
+                    beforeForm += fromStr;
+                }
+            }
+
+            return beforeForm;
+//            StringBuilder sb = new StringBuilder();
+//
+//            String[] bits = path.split(fromStr);
+//
+//            for (int i = 0; i < matchCount; i++) {
+//                sb.append(bits[i]);
+//                if ( i + 1 < matchCount ) {
+//                    sb.append(fromStr);
+//                }
+//            }
+//
+//            return sb.toString();
+        }
+    }
 }

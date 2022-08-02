@@ -1,10 +1,10 @@
 package com.ll.exam.article.controller;
 
+import com.ll.exam.Rq;
 import com.ll.exam.annotation.Autowired;
 import com.ll.exam.annotation.Controller;
 import com.ll.exam.annotation.GetMapping;
 import com.ll.exam.article.service.ArticleService;
-import org.reflections.Reflections;
 
 @Controller
 public class ArticleController {
@@ -12,12 +12,19 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
-    @GetMapping("usr/list/free")
-    void showList() {
-
+    @GetMapping("/usr/article/list/{boardCode}") // /usr/article/list/free 와 같이 관련된 요청을 처리하는 함수이다.
+    // 아래 showList 는 Get /usr/article/list 으로 요청이 왔을 때 실행 되어야 하는 함수이다.
+    public void showList(Rq rq) {
+        rq.println("게시물 리스트");
     }
 
-    public ArticleService getArticleServiceForTest() {
-        return articleService;
+    @GetMapping("/usr/article/detail/{boardCode}/{id}")
+    public void showDetail(Rq rq) {
+        rq.println("게시물 상세페이지<br>");
+
+        long id = rq.getLongPathValueByIndex(1, -1);
+        // long id = rq.getLongParam("id"); // 곧 기능 구현
+
+        rq.println("%d번 게시물".formatted(id));
     }
 }
