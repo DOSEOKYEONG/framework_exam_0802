@@ -9,11 +9,6 @@ import org.reflections.Reflections;
 @Controller
 public class ArticleController {
 
-    public ArticleController() {
-        articleService = new ArticleService();
-
-    }
-
     @Autowired
     ArticleService articleService;
 
