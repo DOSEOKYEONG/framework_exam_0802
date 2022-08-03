@@ -29,11 +29,19 @@ public class Rq {
     public String getParam(String paramName, String defaultValue) {
         String value = req.getParameter(paramName);
 
+        if (value == null) {
+            value = getPathParam(paramName, null);
+        }
+
         if (value == null || value.trim().length() == 0) {
             return defaultValue;
         }
 
         return value;
+    }
+
+    private String getPathParam(String paramName, String defaultValue) {
+        return null;
     }
 
     public long getLongParam(String paramName, long defaultValue) {

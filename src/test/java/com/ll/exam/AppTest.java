@@ -100,7 +100,7 @@ public class AppTest {
     public void ControllerManager__라우트정보_개수() {
         Map<String, RouteInfo> routeInfos = ControllerManager.getRouteInfoMap();
 
-        System.out.println(routeInfos.size());
+        System.out.println("라우트정보_개수" + routeInfos.size());
     }
 
     @Test
